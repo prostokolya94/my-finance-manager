@@ -1,13 +1,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --german-blue: #34495E;
+  --blue: #3498DB;
+  --gray-blue: #2980B9;
+  --gray-blue-dim: rgba(41, 128, 185, 0.06);
+  --green: #2ECC71;
+  --yellow: #F1C40F;
+  --light-blue: #e9eef8;
+  --light-gray: #adadb3;
+  --light-green: #e9f8ea;
 }
 
 html,
@@ -39,4 +41,41 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+header {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  z-index: 100;
+}
+
+nav {
+  width: 100%;
+  height: 100%;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  gap: 130px;
+;
+}
+nav a {
+  display: flex;
+  align-items: center;
+  padding: 2px 12px;
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
+}
+
+nav a:hover {
+  background: rgba(16, 11, 106, 0.1);
+  transform: scale(110%);
+}
+
+nav h5 {
+  margin: 0!important;
+}
+
+nav h5:hover {
+  cursor: pointer;
 }

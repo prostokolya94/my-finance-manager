@@ -1,0 +1,7 @@
+.row {
+    width: 300px;
+    height: 32px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import styles from "./page.module.css";
+import Link from "next/link";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +25,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <header>
+          <nav>
+              <Link href="/dashboard"><h5>Дашборд</h5></Link>
+              <Link href="/expense"><h5>Фиксация трат</h5></Link>
+              <Link href="/planing"><h5>Планирование</h5></Link>
+          </nav>
+        </header>
+        <div className={styles.layoutChildContainer}>
+            {children}
+        </div>
       </body>
     </html>
   );
