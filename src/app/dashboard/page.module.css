@@ -1,0 +1,29 @@
+.dashboard {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--light-blue), var(--light-green));;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input > span {
+    font-weight: 600;
+}

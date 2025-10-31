@@ -6,11 +6,19 @@ export enum Page {
 }
 
 export type Expense = {
-    date: [number, number, number], // [year, month, day]
+    date?: [number, number, number], // [year, month, day]
     groceries: number,
     home: number,
     transport: number,
     clothes: number,
     restaurant: number,
     other: number,
+}
+
+export type ChartData = {
+    titles: string[],
+    dataSet: {
+        label:string,
+        data: number[],
+    }
 }

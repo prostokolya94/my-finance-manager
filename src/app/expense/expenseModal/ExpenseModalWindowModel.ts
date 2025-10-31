@@ -33,7 +33,6 @@ export function onCancelClick (setIsOpen: Dispatch<SetStateAction<boolean>>) {
 export function changeField(key: keyof Omit<Expense, "date">, value: string) {
     action(() => {
         if (stores.expenseStore.currentExpense) {
-            console.log(key, value);
             stores.expenseStore.currentExpense[key] = +value;
         }
     })();

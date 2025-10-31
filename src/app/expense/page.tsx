@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 
 import {stores} from "@/store";
 import {getCurrentRowByDate, getDaysRows, onRowClick} from "@/app/expense/page.model";
-import {ExpenseModalWindow} from "@/shared/ExpenseModal";
+import {ExpenseModalWindow} from "./expenseModal/ExpenseModalWindow";
 
 import styles from "./page.module.css";
 
@@ -17,7 +17,7 @@ const Page = observer(() => {
         return currentDateString?.split("-") || []
     }, [currentDateString]);
     const filteredExpenses = useMemo(() => {
-        return expenses.filter((expense) => expense.date[0] === +year && expense.date[1] === +month)
+        return expenses.filter((expense) => expense.date?.[0] === +year && expense.date?.[1] === +month)
     }, [month, year, expenses]);
 
     const rows = useMemo(() => {
