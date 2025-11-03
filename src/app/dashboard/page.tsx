@@ -1,12 +1,13 @@
 "use client";
 
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {MyChart} from "@/shared/MyChart/MyChart";
 import {observer} from "mobx-react-lite";
 import {stores} from "@/store";
 import {getFilteredExpensesDataSet} from "@/app/dashboard/page.model";
 
 import styles from "./page.module.css";
+import {fetchExpenses} from "@/app/expense/page.model";
 
 const Page = observer(() => {
     const { expenses } = stores.expenseStore
@@ -18,7 +19,13 @@ const Page = observer(() => {
 
     const memoizedTotal = useMemo(() => {
         return getFilteredExpensesDataSet(null);
-    }, [ expenses]);
+    }, [expenses]);
+
+    useEffect(() => {
+        if (expenses.length === 0) {
+            fetchExpenses()
+        }
+    }, [expenses]);
 
     return (
         <div className={styles.dashboard}>

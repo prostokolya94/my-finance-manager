@@ -12,6 +12,6 @@ export const ExpenseTitlesByKeys: Record<keyof Expense,string> = {
     groceries: "Продукты",
     home: "Дом",
     other: "Другое",
-    restaurant: "Рестараны",
+    restaurant: "Рестораны",
     transport: "Транспорт"
 }

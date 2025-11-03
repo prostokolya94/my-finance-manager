@@ -2,6 +2,8 @@ import {stores} from "@/store";
 import {ExpenseFactory} from "@/utils/ExpenseFactory";
 import {Dispatch, SetStateAction} from "react";
 import {isEqual} from "@/utils/Utils";
+import {ExpenseService} from "@/service/ExpenseService";
+import {Expense} from "@/types/Types";
 
 export const getDaysRows = (year: number, month: number) => {
     const date = new Date(year, month, 0);
@@ -18,3 +20,9 @@ export function onRowClick(date: [number, number, number], setIsModalOpen: Dispa
     setIsModalOpen(true);
 }
 
+export function fetchExpenses() {
+    ExpenseService.getExpenses()
+        .then(async (res) => {
+            stores.expenseStore.expenses = await res.json() as Expense[]
+        })
+}

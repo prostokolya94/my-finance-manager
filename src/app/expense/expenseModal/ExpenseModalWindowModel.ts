@@ -2,27 +2,29 @@ import {Dispatch, SetStateAction} from "react";
 import {action} from "mobx";
 
 import {stores} from "@/store";
-import {isEqual} from "@/utils/Utils";
 import {Expense} from "@/types/Types";
+import {ExpenseService} from "@/service/ExpenseService";
+import {fetchExpenses} from "@/app/expense/page.model";
 
 export function closeModalWindow(setIsModalOpen: Dispatch<SetStateAction<boolean>>) {
     setIsModalOpen(false);
 }
 
 export function onSaveClick (setIsOpen: Dispatch<SetStateAction<boolean>>) {
-    const { currentExpense, expenses} = stores.expenseStore
+    const { currentExpense} = stores.expenseStore
     if (!currentExpense) return;
-    const index = expenses.findIndex((expense) => isEqual(expense.date, currentExpense.date));
+    ExpenseService.postExpense(currentExpense)
+        .then(() => {
+            ExpenseService.getExpenses().then(async (resp) => {
+                stores.expenseStore.expenses = await resp.json() as Expense[]
+                stores.expenseStore.currentExpense = null;
+                closeModalWindow(setIsOpen);
+            })
 
-    if (index !== -1) {
-        action(() => {
-            stores.expenseStore.expenses.splice(index, 1, currentExpense)
-        })()
-    } else {
-        stores.expenseStore.expenses = [...stores.expenseStore.expenses, currentExpense]
-    }
-    stores.expenseStore.currentExpense = null;
-    closeModalWindow(setIsOpen);
+        })
+        .catch((er) => {
+            console.error(er);
+        })
 }
 
 export function onCancelClick (setIsOpen: Dispatch<SetStateAction<boolean>>) {
@@ -36,4 +38,17 @@ export function changeField(key: keyof Omit<Expense, "date">, value: string) {
             stores.expenseStore.currentExpense[key] = +value;
         }
     })();
+}
+
+export function deleteField(setIsOpen: Dispatch<SetStateAction<boolean>>) {
+    const { currentExpense } = stores.expenseStore;
+    if (!currentExpense?.date) return;
+    ExpenseService.deleteExpenses(currentExpense.date)
+        .then(() => {
+            setIsOpen(false)
+            fetchExpenses()
+        })
+        .catch((er) => {
+            console.error(er);
+        })
 }

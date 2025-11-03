@@ -1,12 +1,15 @@
 import React, {Dispatch, FC, SetStateAction} from "react";
-import Dialog from '@mui/material/Dialog';
-import {Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Input, Slide} from "@mui/material";
-import {TransitionProps} from "@mui/material/transitions";
-import {changeField, closeModalWindow, onCancelClick, onSaveClick} from "./ExpenseModalWindowModel";
-import {Expense} from "@/types/Types";
-import {ExpenseTitlesByKeys, getStringFromDate} from "@/utils/Utils";
-import styles from "./ExpenseModalWindow.module.css";
 import {observer} from "mobx-react-lite";
+import Dialog from '@mui/material/Dialog';
+import {Button, DialogActions, DialogContent, DialogTitle, Input, Slide} from "@mui/material";
+import {TransitionProps} from "@mui/material/transitions";
+
+import {ExpenseTitlesByKeys, getStringFromDate} from "@/utils/Utils";
+
+import {Expense} from "@/types/Types";
+
+import {changeField, closeModalWindow, deleteField, onCancelClick, onSaveClick} from "./ExpenseModalWindowModel";
+import styles from "./ExpenseModalWindow.module.css";
 
 interface IExpenseModalWindow {
     open: boolean;
@@ -57,7 +60,8 @@ const ExpenseModalWindow:FC<IExpenseModalWindow> = observer(({open, setOpen, cur
                     })}
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => onSaveClick(setOpen)}>Сохранить</Button>
+                <Button variant={"outlined"} color={"error"} onClick={() => deleteField(setOpen)}>Удалить</Button>
+                <Button variant={"contained"} color={"success"} onClick={() => onSaveClick(setOpen)}>Сохранить</Button>
                 <Button onClick={() => onCancelClick(setOpen)}>Отменить</Button>
             </DialogActions>
         </Dialog>

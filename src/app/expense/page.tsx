@@ -1,12 +1,12 @@
 "use client";
 
-import React, {useMemo, useState} from "react";
-import { observer } from "mobx-react-lite";
+import React, {useEffect, useMemo, useState} from "react";
+import {observer} from "mobx-react-lite";
 
 import {stores} from "@/store";
-import {getCurrentRowByDate, getDaysRows, onRowClick} from "@/app/expense/page.model";
-import {ExpenseModalWindow} from "./expenseModal/ExpenseModalWindow";
+import {fetchExpenses, getCurrentRowByDate, getDaysRows, onRowClick} from "@/app/expense/page.model";
 
+import {ExpenseModalWindow} from "./expenseModal/ExpenseModalWindow";
 import styles from "./page.module.css";
 
 const Page = observer(() => {
@@ -19,6 +19,12 @@ const Page = observer(() => {
     const filteredExpenses = useMemo(() => {
         return expenses.filter((expense) => expense.date?.[0] === +year && expense.date?.[1] === +month)
     }, [month, year, expenses]);
+
+    useEffect(() => {
+        if (expenses.length === 0) {
+            fetchExpenses()
+        }
+    }, []);
 
     const rows = useMemo(() => {
         return Array.from({length: getDaysRows(+year, +month)}).map((_, index) => {

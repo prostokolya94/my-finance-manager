@@ -1,6 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import {Expense} from "@/types/Types";
-import {LocalStorage} from "@/shared/LocalStorage/LocalStorage";
 
 export class ExpenseStore {
     private _expenses: Expense[] = [];
@@ -8,11 +7,6 @@ export class ExpenseStore {
 
     constructor() {
         makeAutoObservable(this)
-        try {
-            this._expenses = LocalStorage.get<Expense[]>('expenses') || []
-        } catch (e) {
-            console.error(e);
-        }
     }
 
     get expenses(): Expense[] {
@@ -20,12 +14,7 @@ export class ExpenseStore {
     }
 
     set expenses(value: Expense[]) {
-        try {
-            this._expenses = value;
-            LocalStorage.set('expenses', value)
-        } catch (e) {
-            console.error(e);
-        }
+        this._expenses = value;
     }
 
     get currentExpense(): Expense | null {
