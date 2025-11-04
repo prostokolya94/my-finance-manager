@@ -1,7 +1,6 @@
 import {Expense} from "@/types/Types";
 
-const port = process.env.PORT || 8001;
-const url = "http://localhost:" + port;
+const url = (process.env.NEXT_PUBLIC_API_URL || "");
 
 export class ExpenseService {
 

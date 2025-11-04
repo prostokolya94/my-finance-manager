@@ -23,6 +23,13 @@ export function onRowClick(date: [number, number, number], setIsModalOpen: Dispa
 export function fetchExpenses() {
     ExpenseService.getExpenses()
         .then(async (res) => {
-            stores.expenseStore.expenses = await res.json() as Expense[]
+            try {
+                stores.expenseStore.expenses = await res.json() as Expense[]
+            } catch (e) {
+                throw new Error(e as string)
+            }
+        })
+        .catch((err) => {
+            console.log(err);
         })
 }
